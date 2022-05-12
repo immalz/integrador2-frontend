@@ -1,0 +1,47 @@
+<div class="fullpage">
+    <div class="fullpage__navbar">
+      <app-header></app-header>
+    </div>
+    <div class="fullpage__container">
+      <div class="nav" id="nav" [ngClass]="toggle == true ? 'show-menu' : ''">
+        
+<nav class="nav__content" >
+  <div class="nav__toggle" [ngClass]="toggle == true ? 'rotate-icon' : ''" (click)="toggle = !toggle" id="nav-toggle">
+      <mat-icon>keyboard_arrow_right</mat-icon>
+  </div>
+
+  <a href="#" class="nav__logo">
+      <mat-icon>home</mat-icon>
+      <span class="nav__logo-name">Textil Chavin</span>
+  </a>
+
+  <div class="nav__list">
+      <a [routerLink]="['/routePath']" routerLinkActive="router-link-active"  class="nav__link active-link">
+          <mat-icon>settings</mat-icon>
+          <span class="nav__name">Dashboard</span>
+      </a>
+
+      <a [routerLink]="['/routePath']" routerLinkActive="router-link-active"  class="nav__link">
+          <mat-icon>assignment</mat-icon>
+          <span class="nav__name">Appointments</span>
+      </a>
+
+      <a [routerLink]="['/routePath']" routerLinkActive="router-link-active"  class="nav__link">
+          <mat-icon>settings</mat-icon>
+          <span class="nav__name">Messages</span>
+      </a>
+
+      <a [routerLink]="['/routePath']" routerLinkActive="router-link-active"  class="nav__link">
+          <mat-icon>assessment</mat-icon>
+          <span class="nav__name">Statistic</span>
+      </a>
+  </div>
+</nav>
+
+
+      </div>
+      <div class="fullpage__container--pages">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
