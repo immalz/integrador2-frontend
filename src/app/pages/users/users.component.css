@@ -1,11 +1,11 @@
-.providers {
+.users {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.providers__btns {
+.users__btns {
     width: 90%;
     margin: 10px auto;
     display: flex;
@@ -13,21 +13,21 @@
     gap: 10px;
 }
 
-.providers__btns button {
+.users__btns button {
     margin-top: 20px;
 }
 
-.providers__table {
+.users__table {
     width: 90%;
     height: 500px;
     overflow-y: scroll;
     margin: auto;
 }
 
-.providers__table::-webkit-scrollbar {
+.users__table::-webkit-scrollbar {
     width: 0;
 }
-.providers__table table {
+.users__table table {
     width: 100%;
   }
 .mat-form-field {

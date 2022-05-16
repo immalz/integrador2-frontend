@@ -3,6 +3,11 @@
     height: 100%;
     display: flex;
     justify-content: flex-end;
-    padding-right: 20px;
     align-items: center;
+    background: rgb(185, 185, 185);
+}
+
+button {
+    margin: 0 20px;
+    color: var(--first-color);;
 }

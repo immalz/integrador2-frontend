@@ -7,40 +7,41 @@
         
 <nav class="nav__content" >
   <div class="nav__toggle" [ngClass]="toggle == true ? 'rotate-icon' : ''" (click)="toggle = !toggle" id="nav-toggle">
-      <mat-icon>keyboard_arrow_right</mat-icon>
+      <mat-icon>arrow_right</mat-icon>
   </div>
 
-  <a href="#" class="nav__logo">
+  <a href="https://www.textilchavin.com.pe" target="_blank"  class="nav__logo">
       <mat-icon>home</mat-icon>
       <span class="nav__logo-name">Textil Chavin</span>
   </a>
 
   <div class="nav__list">
-      <a [routerLink]="['/routePath']" routerLinkActive="router-link-active"  class="nav__link active-link">
+      <a [routerLink]="['']" routerLinkActive="active-link"  class="nav__link">
           <mat-icon>settings</mat-icon>
           <span class="nav__name">Dashboard</span>
       </a>
 
-      <a [routerLink]="['/routePath']" routerLinkActive="router-link-active"  class="nav__link">
-          <mat-icon>assignment</mat-icon>
-          <span class="nav__name">Appointments</span>
+      <a [routerLink]="['/dashboard/usuarios']" routerLinkActive="active-link"  class="nav__link">
+          <mat-icon>perm_contact_calendar</mat-icon>
+          <span class="nav__name">Usuarios</span>
       </a>
 
-      <a [routerLink]="['/routePath']" routerLinkActive="router-link-active"  class="nav__link">
-          <mat-icon>settings</mat-icon>
-          <span class="nav__name">Messages</span>
+      <a [routerLink]="['/dashboard/proveedores']" routerLinkActive="active-link"  class="nav__link">
+          <mat-icon>assignment_turned_in</mat-icon>
+          <span class="nav__name">Proveedores</span>
       </a>
 
-      <a [routerLink]="['/routePath']" routerLinkActive="router-link-active"  class="nav__link">
-          <mat-icon>assessment</mat-icon>
-          <span class="nav__name">Statistic</span>
+      <a [routerLink]="['/dashboard/inventario']" routerLinkActive="active-link"  class="nav__link">
+          <mat-icon>shopping_basket</mat-icon>
+          <span class="nav__name">Productos</span>
       </a>
   </div>
 </nav>
-
+      </div>
+      <div class="nav_content_page" [ngClass]="toggle == true ? 'show-page' : ''">
 
       </div>
-      <div class="fullpage__container--pages">
+      <div class="fullpage__container--pages"  [ngClass]="toggle == true ? 'compress-page' : ''">
         <router-outlet></router-outlet>
       </div>
     </div>

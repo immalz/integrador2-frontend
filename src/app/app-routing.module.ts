@@ -1,3 +1,4 @@
+import { UsersComponent } from './pages/users/users.component';
 import { AuthGuard } from './services/auth.guard';
 import { GraphicsComponent } from './pages/graphics/graphics.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -14,8 +15,10 @@ const routes: Routes = [
     
     {path: '', component: GraphicsComponent},
     {path: 'inventario', component: InventaryComponent},
+    {path: 'usuarios', component: UsersComponent},
     {path: 'proveedores', component: ProvidersComponent},
   ]},
+  {path: '', redirectTo:'dashboard', pathMatch: 'full' },
   {path:'**', pathMatch: 'full', component: NotFoundComponent}
 ];
 

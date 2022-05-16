@@ -1,19 +1,17 @@
 import { MatDialog } from '@angular/material/dialog';
-import { CreateUpdateProviderComponent } from './create-update/create-update.component';
 
 import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { CreateUpdateUserComponent } from './create-update/create-update.component';
 
 
 export interface UserData {
   id: string;
-  owner: string;
-  razon_social: string;
+  name: string;
   email: string;
-  ruc: string;
-  phone: string;
+  role: string;
 }
 
 const NAMES: string[] = [
@@ -38,15 +36,14 @@ const NAMES: string[] = [
   'Elizabeth',
 ];
 
-
 @Component({
-  selector: 'app-providers',
-  templateUrl: './providers.component.html',
-  styleUrls: ['./providers.component.css']
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
 })
-export class ProvidersComponent implements AfterViewInit  {
+export class UsersComponent implements AfterViewInit  {
 
-  displayedColumns: string[] = ['id', 'owner', 'razon_social', 'email', 'ruc', 'phone'];
+  displayedColumns: string[] = ['id', 'name', 'email', 'role'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -58,7 +55,6 @@ export class ProvidersComponent implements AfterViewInit  {
   ) {
     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
 
-    // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
    }
 
@@ -68,7 +64,7 @@ export class ProvidersComponent implements AfterViewInit  {
   }
 
   create(): any {
-    const dialogRef = this.dialog.open(CreateUpdateProviderComponent);
+    const dialogRef = this.dialog.open(CreateUpdateUserComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Payload a enviar: ${result}`);
@@ -95,10 +91,8 @@ function createNewUser(id: number): UserData {
 
   return {
     id: id.toString(),
-    owner: name,
-    razon_social: `${name} S.A.C`,
-    email: `${name}@abc.com`,
-    ruc: `1${Math.floor(Math.random()*9000000000) + 1000000000}`,
-    phone: `+51 9${Math.floor(Math.random()*90000000) + 10000000}`,
+    name: name,
+    email: `${name}@textilchavin.com`,
+    role: 'operador'
   };
 }

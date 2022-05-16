@@ -1,3 +1,4 @@
+import { CreateUpdateUserComponent } from './pages/users/create-update/create-update.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -16,6 +17,9 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { GraphicsComponent } from './pages/graphics/graphics.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-components.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UsersComponent } from './pages/users/users.component';
+import { CreateUpdateProviderComponent } from './pages/providers/create-update/create-update.component';
 
 @NgModule({
   declarations: [
@@ -29,14 +33,19 @@ import { MaterialModule } from './material-components.module';
     InventaryComponent,
     ProvidersComponent,
     CreateUpdateComponent,
+    CreateUpdateUserComponent,
+    CreateUpdateProviderComponent,
     NotFoundComponent,
-    GraphicsComponent
+    GraphicsComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
