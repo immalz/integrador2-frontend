@@ -1,0 +1,63 @@
+.providers {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.providers__btns {
+    width: 90%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.providers__btns button {
+    margin-top: 20px;
+}
+
+.providers__table {
+    width: 90%;
+    height: 500px;
+    overflow-y: scroll;
+    margin: auto;
+}
+
+.providers__table::-webkit-scrollbar {
+    width: 0;
+}
+.providers__table table {
+    width: 100%;
+  }
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+
+  .action {
+      margin: 0 10px;
+  }
+
+img {
+    position: absolute;
+ bottom: 30px;
+ right: 30px;
+ z-index: -1;
+ width: 150px;
+ animation: animate 2s infinite;
+ transition: 0.2s ease;
+}
+
+@keyframes animate {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

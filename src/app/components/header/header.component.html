@@ -1,5 +1,6 @@
-<nav class="navbar">
-   <button [routerLink]="['/acceder']" mat-icon-button >
+<nav class="navbar" *ngIf="user">
+   <p><b>Usuario: </b>{{user.nombre}}</p>
+   <button (click)="loggout()" mat-icon-button >
       <mat-icon>launch</mat-icon>
     </button>
 </nav>

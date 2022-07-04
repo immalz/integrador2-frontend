@@ -1,3 +1,4 @@
+import { RecordsComponent } from './pages/historial/historial.component';
 import { CreateUpdateUserComponent } from './pages/users/create-update/create-update.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,7 +12,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { InventaryComponent } from './pages/inventary/inventary.component';
-import { ProvidersComponent } from './pages/providers/providers.component';
+import { ProvidersComponent, DialogConfirm } from './pages/providers/providers.component';
 import { CreateUpdateComponent } from './pages/inventary/create-update/create-update.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { GraphicsComponent } from './pages/graphics/graphics.component';
@@ -20,6 +21,7 @@ import { MaterialModule } from './material-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersComponent } from './pages/users/users.component';
 import { CreateUpdateProviderComponent } from './pages/providers/create-update/create-update.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { CreateUpdateProviderComponent } from './pages/providers/create-update/c
     CreateUpdateProviderComponent,
     NotFoundComponent,
     GraphicsComponent,
-    UsersComponent
+    UsersComponent,
+    RecordsComponent,
+    DialogConfirm
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,8 @@ import { CreateUpdateProviderComponent } from './pages/providers/create-update/c
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

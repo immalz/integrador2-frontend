@@ -8,6 +8,7 @@ import { InventaryComponent } from './pages/inventary/inventary.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RecordsComponent } from './pages/historial/historial.component';
 
 const routes: Routes = [
   {path: 'acceder', component: LoginComponent},
@@ -17,6 +18,8 @@ const routes: Routes = [
     {path: 'inventario', component: InventaryComponent},
     {path: 'usuarios', component: UsersComponent},
     {path: 'proveedores', component: ProvidersComponent},
+    {path: 'entrada-salida', component: ProvidersComponent},
+    {path: 'historial', component: RecordsComponent},
   ]},
   {path: '', redirectTo:'dashboard', pathMatch: 'full' },
   {path:'**', pathMatch: 'full', component: NotFoundComponent}

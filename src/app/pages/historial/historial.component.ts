@@ -1,11 +1,11 @@
-import { UserService } from './../../services/users.service';
+import { HistorialService } from './../../services/historial.service';
+import { UserService } from '../../services/users.service';
 import { MatDialog } from '@angular/material/dialog';
 
 import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { CreateUpdateUserComponent } from './create-update/create-update.component';
 
 
 export interface UserData {
@@ -14,36 +14,14 @@ export interface UserData {
   email: string;
 }
 
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
-
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  selector: 'app-records',
+  templateUrl: './historial.component.html',
+  styleUrls: ['./historial.component.css']
 })
-export class UsersComponent implements AfterViewInit  {
+export class RecordsComponent implements AfterViewInit  {
 
-  displayedColumns: string[] = ['id', 'name', 'email', 'role', 'actions'];
+  displayedColumns: string[] = ['id', 'date', 'module', 'description','responsible', 'actions'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -52,7 +30,7 @@ export class UsersComponent implements AfterViewInit  {
 
   constructor(
     public dialog: MatDialog,
-    private userService: UserService
+    private historialService: HistorialService
   ) {
     this.dataSource = new MatTableDataSource();
    }
@@ -60,11 +38,11 @@ export class UsersComponent implements AfterViewInit  {
    ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.getUsers();
+    this.getRecords();
   }
 
-  getUsers(): void{
-    this.userService.getUsers().subscribe(
+  getRecords(): void{
+    this.historialService.getHistory().subscribe(
       (res: any) => {
         console.log(res)
         this.dataSource.data = res.reverse();
@@ -72,14 +50,7 @@ export class UsersComponent implements AfterViewInit  {
     )
   }
 
-  create(): any {
-    const dialogRef = this.dialog.open(CreateUpdateUserComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Payload a enviar: ${result}`);
-    });
-  }
-
+ 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

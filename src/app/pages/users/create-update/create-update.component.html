@@ -10,6 +10,14 @@
             <input matInput type="email" [(ngModel)]="payload.email" [ngModelOptions]="{standalone: true}">
         </mat-form-field>
         <mat-form-field appearance="fill">
+            <mat-label>Elige un rol</mat-label>
+            <mat-select>
+              <mat-option value="option1">Usuario Operario</mat-option>
+              <mat-option value="option3">Usuario Administrador</mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+        <mat-form-field appearance="fill">
             <mat-label>Contraseña</mat-label>
             <input matInput type="password" [(ngModel)]="payload.password" [ngModelOptions]="{standalone: true}">
         </mat-form-field>

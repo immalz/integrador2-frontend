@@ -1,14 +1,25 @@
 <div class="login">
-    <form action="" class="form">
+    <form [formGroup]="loginForm" class="form">
         <img class="logo_img" src="assets/images/chavin.webp" alt="Textileria Chavin">
         <mat-form-field appearance="fill">
             <mat-label>Usuario</mat-label>
-            <input matInput type="text" [(ngModel)]="payload.username" [ngModelOptions]="{standalone: true}">
+            <input matInput type="text" formControlName="correo">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Contraseña</mat-label>
-            <input matInput type="password" [(ngModel)]="payload.password" [ngModelOptions]="{standalone: true}">
+            <input matInput type="password" formControlName="contraseña">
         </mat-form-field>
-        <button mat-flat-button color="primary" [routerLink]="['/dashboard']"  >Iniciar Sesión</button>
+        <ng-container *ngIf="!loading">
+            <button mat-flat-button  (click)="login()" >Iniciar Sesión</button>
+        </ng-container>
+        
+
+        <div class="loading" *ngIf="loading">
+            <div class="lds-facebook"><div></div><div></div><div></div></div>
+        </div>
+        
     </form>
 </div>
+
+
+<img class="img_bg" src="assets/images/login.png" alt="">

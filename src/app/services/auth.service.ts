@@ -2,14 +2,19 @@ import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import User from '../interfaces/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(
+    private readonly http: HttpClient
+  ) { }
+
+  login(payload: any) {
+    return this.http.post(`${environment.url}/auth/signin`, payload);
+  }
 
   loggedIn(): boolean{
     return !!localStorage.getItem('token');

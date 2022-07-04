@@ -35,6 +35,15 @@
           <mat-icon>shopping_basket</mat-icon>
           <span class="nav__name">Productos</span>
       </a>
+      <a [routerLink]="['/dashboard/entrada-salida']" routerLinkActive="active-link"  class="nav__link">
+          <mat-icon>import_export</mat-icon>
+          <span class="nav__name">Entrada/Salida</span>
+      </a>
+
+      <a [routerLink]="['/dashboard/historial']" routerLinkActive="active-link"  class="nav__link">
+        <mat-icon>list_alt</mat-icon>
+        <span class="nav__name">Historial</span>
+    </a>
   </div>
 </nav>
       </div>

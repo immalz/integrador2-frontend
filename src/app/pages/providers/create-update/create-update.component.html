@@ -1,26 +1,26 @@
 <div class="create">
-    <form action="" class="form">
+    <form [formGroup]="providerForm" class="form">
         <h2>Registrar Proveedor</h2>
         <mat-form-field appearance="fill">
             <mat-label>Razon Social</mat-label>
-            <input matInput type="text" [(ngModel)]="payload.username" [ngModelOptions]="{standalone: true}">
+            <input matInput type="text" formControlName="razon_social">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Encargado</mat-label>
-            <input matInput type="text" [(ngModel)]="payload.username" [ngModelOptions]="{standalone: true}">
+            <input matInput type="text" formControlName="encargado" formControlName="encargado">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Correo</mat-label>
-            <input matInput type="email" [(ngModel)]="payload.email" [ngModelOptions]="{standalone: true}">
+            <input matInput type="email" formControlName="correo">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>RUC</mat-label>
-            <input matInput type="text" [(ngModel)]="payload.password" [ngModelOptions]="{standalone: true}">
+            <input matInput type="number" formControlName="ruc">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Número de Contacto</mat-label>
-            <input matInput type="number" [(ngModel)]="payload.password" [ngModelOptions]="{standalone: true}">
+            <input matInput type="number" formControlName="celular">
         </mat-form-field>
-        <button mat-flat-button color="primary" (click)="send()" >Guardar</button>
+        <button [disabled]="providerForm.invalid" mat-flat-button color="primary" (click)="send()" >Guardar</button>
     </form>
 </div>

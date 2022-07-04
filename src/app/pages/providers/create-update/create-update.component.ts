@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-update',
@@ -9,33 +9,28 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CreateUpdateProviderComponent implements OnInit {
   
-  payload = {
-    username: '',
-    email: '',
-    password: ''
-  }
+  providerForm: any;
 
   constructor(
     private dialogRef: MatDialogRef<CreateUpdateProviderComponent>,
-    private _snackBar: MatSnackBar,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.providerForm = this.fb.group({
+      "correo": ['', Validators.compose([Validators.required, Validators.email])],
+      "razon_social": ['', Validators.compose([Validators.required])],
+      "ruc": [null, Validators.compose([Validators.required, Validators.min(9999999), Validators.max(100000000000)])],
+      "celular": [null, Validators.compose([Validators.required, Validators.min(99999999), Validators.max(1000000000)])],
+      "encargado": ['', Validators.compose([Validators.required])],
+      "responsable": "62c35100ecbce325e002fdce"
+    })
   }
 
   send(): any {
-    this.dialogRef.close(this.payload)
-    this.openSnackBar('Se registro el proveedor correctamente!');
+    this.dialogRef.close(this.providerForm.value)
   }
 
-
-  openSnackBar(message: string) {
-    this._snackBar.open(message, 'Cerrar', {
-      duration: 3000,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'center',
-    });
-  }
 
   
 

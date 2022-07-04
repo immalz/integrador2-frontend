@@ -1,10 +1,12 @@
-import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CreateUpdateProviderComponent } from './create-update/create-update.component';
 
 import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { ProvidersService } from 'src/app/services/providers.service';
 
 
 export interface UserData {
@@ -16,28 +18,6 @@ export interface UserData {
   phone: string;
 }
 
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
-
 
 @Component({
   selector: 'app-providers',
@@ -46,7 +26,7 @@ const NAMES: string[] = [
 })
 export class ProvidersComponent implements AfterViewInit  {
 
-  displayedColumns: string[] = ['id', 'owner', 'razon_social', 'email', 'ruc', 'phone'];
+  displayedColumns: string[] = ['id', 'owner', 'razon_social', 'email', 'ruc', 'phone', 'actions'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -54,24 +34,65 @@ export class ProvidersComponent implements AfterViewInit  {
 
 
   constructor(
-    public dialog: MatDialog
-  ) {
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+    public dialog: MatDialog,
+    private providerService: ProvidersService,
+    private _snackBar: MatSnackBar,
+  ) {    
+    this.dataSource = new MatTableDataSource();
    }
 
    ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.getProviders();
+  }
+
+  getProviders(): void{
+    this.providerService.getProviders().subscribe(
+      (res: any) => {
+        console.log(res)
+        this.dataSource.data = res.reverse();
+      }
+    )
   }
 
   create(): any {
     const dialogRef = this.dialog.open(CreateUpdateProviderComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Payload a enviar: ${result}`);
+      this.providerService.createProvider(result).subscribe (
+        res => {
+          console.log(res)
+          this.openSnackBar('Se registro el proveedor correctamente!');
+          this.getProviders();
+        },
+        err => {
+          console.log(err)
+        }
+      )
+    });
+  }
+
+  deleteProvider(id: number): void{
+
+    const dialogRef = this.dialog.open(DialogConfirm);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        const payload = {
+          responsable: '62c35100ecbce325e002fdce'
+        }
+        this.providerService.deleteProvider(id, payload).subscribe(
+          res => {
+            console.log(res);
+            this.openSnackBar('Se elimino el proveedor correctamente')
+            this.getProviders();
+          },
+          err => {
+            console.log(err);
+          }
+        )
+      }
     });
   }
 
@@ -83,22 +104,30 @@ export class ProvidersComponent implements AfterViewInit  {
       this.dataSource.paginator.firstPage();
     }
   }
+  
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'center',
+    });
+  }
+
 }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
+@Component({
+  selector: 'dialog-content-example-dialog',
+  templateUrl: 'confirm.component.html',
+})
+export class DialogConfirm {
 
-  return {
-    id: id.toString(),
-    owner: name,
-    razon_social: `${name} S.A.C`,
-    email: `${name}@abc.com`,
-    ruc: `1${Math.floor(Math.random()*9000000000) + 1000000000}`,
-    phone: `+51 9${Math.floor(Math.random()*90000000) + 10000000}`,
-  };
+  constructor(
+    private dialogRef: MatDialogRef<DialogConfirm>
+  ) {
+
+  }
+  deleteConfirm(): void {
+    this.dialogRef.close(true);
+  }
 }
+

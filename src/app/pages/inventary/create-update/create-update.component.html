@@ -1,1 +1,38 @@
-<p>create-update works!</p>
+<div class="create">
+    <form action="" class="form">
+        <h2>Registrar Producto</h2>
+        <mat-form-field appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" [(ngModel)]="payload.username" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Proveedor</mat-label>
+            <mat-select>
+              <mat-option value="option1">Marco Alzamora</mat-option>
+              <mat-option value="option3">Ruben Bados</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Fecha de Ingreso</mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Precio</mat-label>
+            <input matInput type="number" [(ngModel)]="payload.password" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        
+
+        <mat-form-field appearance="fill">
+            <mat-label>Stock</mat-label>
+            <input matInput type="number" [(ngModel)]="payload.password" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+      
+        <button mat-flat-button color="primary" (click)="send()" >Guardar</button>
+    </form>
+</div>
