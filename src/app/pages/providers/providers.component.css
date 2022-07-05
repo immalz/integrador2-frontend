@@ -42,7 +42,7 @@ img {
 
 .providers__table {
     width: 90%;
-    height: 500px;
+    min-height: 500px;
     overflow-y: scroll;
     margin: auto;
 }

@@ -9,6 +9,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RecordsComponent } from './pages/historial/historial.component';
+import { MovimientoComponent } from './pages/movimiento/inventary.component';
 
 const routes: Routes = [
   {path: 'acceder', component: LoginComponent},
@@ -18,7 +19,7 @@ const routes: Routes = [
     {path: 'inventario', component: InventaryComponent},
     {path: 'usuarios', component: UsersComponent},
     {path: 'proveedores', component: ProvidersComponent},
-    {path: 'entrada-salida', component: ProvidersComponent},
+    {path: 'entrada-salida', component: MovimientoComponent},
     {path: 'historial', component: RecordsComponent},
   ]},
   {path: '', redirectTo:'dashboard', pathMatch: 'full' },

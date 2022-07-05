@@ -1,0 +1,32 @@
+<div class="create">
+    <form [formGroup]="movForm" class="form">
+        <h2>Registrar Producto</h2>
+        <!-- <mat-form-field appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" [(ngModel)]="payload.username" [ngModelOptions]="{standalone: true}">
+        </mat-form-field> -->
+
+        <mat-form-field appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <mat-select formControlName="material">
+              <mat-option [value]="product._id" *ngFor="let product of listProducts">{{product.nombre}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Tipo</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option value="entrada">Entrada</mat-option>
+              <mat-option value="salida">Salida</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cantidad</mat-label>
+            <input formControlName="cantidad" matInput type="number" >
+        </mat-form-field>
+      
+        <button [disabled]="movForm.invalid" mat-flat-button color="primary" (click)="send()" >Guardar</button>
+    </form>
+</div>

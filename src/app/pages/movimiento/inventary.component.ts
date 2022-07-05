@@ -1,6 +1,7 @@
+import { MovementService } from './../../services/movimiento.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { InventoryService } from './../../services/inventory.service';
-import { CreateUpdateComponent } from './create-update/create-update.component';
+import { InventoryService } from '../../services/inventory.service';
+import { CreateUpdateMovimientoComponent } from './create-update/create-update.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
@@ -25,9 +26,9 @@ export interface UserData {
   templateUrl: './inventary.component.html',
   styleUrls: ['./inventary.component.css']
 })
-export class InventaryComponent implements AfterViewInit  {
+export class MovimientoComponent implements AfterViewInit  {
 
-  displayedColumns: string[] = ['id', 'razon_social', 'stock','owner', 'email', 'ruc', 'actions'];
+  displayedColumns: string[] = ['id', 'nombre','tipo','cantidad', 'responsable','fecha', 'actions'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -36,7 +37,7 @@ export class InventaryComponent implements AfterViewInit  {
 
   constructor(
     public dialog: MatDialog,
-    private inventaryService: InventoryService,
+    private movementService: MovementService,
     private _snackBar: MatSnackBar,
   ) {
     this.dataSource = new MatTableDataSource();
@@ -49,7 +50,7 @@ export class InventaryComponent implements AfterViewInit  {
   }
 
   getInventory(): void{
-    this.inventaryService.getInventary().subscribe(
+    this.movementService.getMovements().subscribe(
       (res: any) => {
         console.log(res)
         this.dataSource.data = res.reverse();
@@ -58,24 +59,24 @@ export class InventaryComponent implements AfterViewInit  {
   }
 
   create(): any {
-    const dialogRef = this.dialog.open(CreateUpdateComponent);
+    const dialogRef = this.dialog.open(CreateUpdateMovimientoComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Payload a enviar: ${result}`);
+      this.getInventory();
     });
   }
 
   
   deleteMaterial(id: string): void{
 
-    const dialogRef = this.dialog.open(DialogConfirm2);
+    const dialogRef = this.dialog.open(DialogConfirm3);
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         const payload = {
           responsable: '62c35100ecbce325e002fdce'
         }
-        this.inventaryService.deleteInventory(id, payload).subscribe(
+        this.movementService.deleteMovement(id, payload).subscribe(
           res => {
             console.log(res);
             this.openSnackBar('Se elimino el proveedor correctamente')
@@ -111,10 +112,10 @@ export class InventaryComponent implements AfterViewInit  {
   selector: 'dialog-content-example-dialog',
   templateUrl: 'confirm.component.html',
 })
-export class DialogConfirm2 {
+export class DialogConfirm3 {
 
   constructor(
-    private dialogRef: MatDialogRef<DialogConfirm2>
+    private dialogRef: MatDialogRef<DialogConfirm3>
   ) {
 
   }

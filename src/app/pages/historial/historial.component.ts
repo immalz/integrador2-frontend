@@ -21,7 +21,7 @@ export interface UserData {
 })
 export class RecordsComponent implements AfterViewInit  {
 
-  displayedColumns: string[] = ['id', 'date', 'module', 'description','responsible', 'actions'];
+  displayedColumns: string[] = ['id', 'date', 'module', 'description','responsible'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
