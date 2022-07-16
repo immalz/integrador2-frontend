@@ -21,6 +21,7 @@
             <mat-label>Número de Contacto</mat-label>
             <input matInput type="number" formControlName="celular">
         </mat-form-field>
-        <button [disabled]="providerForm.invalid" mat-flat-button color="primary" (click)="send()" >Guardar</button>
+        <button *ngIf="data.mode === 'create'" [disabled]="providerForm.invalid" mat-flat-button color="primary" (click)="send()" >Guardar</button>
+        <button *ngIf="data.mode === 'update'" [disabled]="providerForm.invalid" mat-flat-button color="primary" (click)="update()" >Actualizar</button>
     </form>
 </div>

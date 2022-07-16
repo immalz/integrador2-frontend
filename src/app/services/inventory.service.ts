@@ -12,6 +12,13 @@ export class InventoryService {
   getInventary() {
     return this.http.get(`${environment.url}/material`);
   }
+  getInventaryByID(id: number) {
+    return this.http.get(`${environment.url}/material/${id}`);
+  }
+
+  createMaterial(payload: any) {
+    return this.http.post(`${environment.url}/material`, payload);
+  }
 
   deleteInventory(id: string, payload: any) {
     return this.http.post(`${environment.url}/material/${id}`, payload);

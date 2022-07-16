@@ -23,6 +23,9 @@ export class ProvidersService {
   createProvider(payload: any) {
     return this.http.post(`${environment.url}/proveedor`, payload);
   }
+  updateProvider(id: string, payload: any) {
+    return this.http.put(`${environment.url}/proveedor/${id}`, payload);
+  }
 
   deleteProvider(id: number, payload: any) {
     return this.http.post(`${environment.url}/proveedor/${id}`, payload);

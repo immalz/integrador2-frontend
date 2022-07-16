@@ -21,7 +21,7 @@
           <span class="nav__name">Dashboard</span>
       </a>
 
-      <a [routerLink]="['/dashboard/usuarios']" routerLinkActive="active-link"  class="nav__link">
+      <a *ngIf="rol === 'administrador'" [routerLink]="['/dashboard/usuarios']" routerLinkActive="active-link"  class="nav__link">
           <mat-icon>perm_contact_calendar</mat-icon>
           <span class="nav__name">Usuarios</span>
       </a>

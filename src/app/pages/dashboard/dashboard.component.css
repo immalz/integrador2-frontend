@@ -123,6 +123,12 @@
     .nav__list {
       column-gap: 20px;
     }
+    .fullpage__container--pages {
+      width: 100%;
+    }
+    .mat-table {
+      overflow-x: scroll;
+    }
   }
   
   /* For medium devices */
@@ -130,6 +136,7 @@
     .nav__list {
       width: 332px;
     }
+  
   }
   
   @media screen and (min-width: 767px) {

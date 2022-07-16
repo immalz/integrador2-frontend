@@ -4,11 +4,12 @@ import { InventoryService } from '../../services/inventory.service';
 import { CreateUpdateMovimientoComponent } from './create-update/create-update.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, OnInit, ElementRef} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export interface UserData {
   id: string;
@@ -28,12 +29,11 @@ export interface UserData {
 })
 export class MovimientoComponent implements AfterViewInit  {
 
-  displayedColumns: string[] = ['id', 'nombre','tipo','cantidad', 'responsable','fecha', 'actions'];
+  displayedColumns: string[] = [ 'nombre','tipo','cantidad', 'stock', 'responsable','fecha', 'actions'];
   dataSource: MatTableDataSource<UserData>;
-
+  rol: string = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
 
   constructor(
     public dialog: MatDialog,
@@ -45,9 +45,33 @@ export class MovimientoComponent implements AfterViewInit  {
    }
 
    ngAfterViewInit() {
+    this.rol = JSON.parse(localStorage.getItem('user')!).roles[0].nombre;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+  downloadPDF() {
+    const DATA: HTMLElement = document.getElementById('htmlData')!;
+    const doc = new jsPDF('p', 'pt', 'a4');
+    const options = {
+      background: 'white',
+      scale: 3
+    };
+    html2canvas(DATA, options).then((canvas) => {
+
+      const img = canvas.toDataURL('image/PNG');
+      const bufferX = 15;
+      const bufferY = 15;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+      docResult.save(`${new Date().toISOString()}-movimientos.pdf`);
+    });
+  }
+
 
   getInventory(): void{
     this.movementService.getMovements().subscribe(
@@ -73,13 +97,14 @@ export class MovimientoComponent implements AfterViewInit  {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
+        const userid = JSON.parse(localStorage.getItem('user')!)._id;
+         
         const payload = {
-          responsable: '62c35100ecbce325e002fdce'
+          responsable: userid
         }
         this.movementService.deleteMovement(id, payload).subscribe(
-          res => {
-            console.log(res);
-            this.openSnackBar('Se elimino el proveedor correctamente')
+          (res: any) => {
+            this.openSnackBar(res.message)
             this.getInventory();
           },
           err => {

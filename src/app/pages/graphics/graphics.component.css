@@ -3,6 +3,7 @@
     height: calc(100vh - 40px);
     display: flex;
     justify-content: center;
+    background-image: radial-gradient(ellipse farthest-corner at 45px 30px , #fff 80%, rgba(0, 255, 0, 0) 0%, #bdbdbd 50%);
 }
 
 .cards  {

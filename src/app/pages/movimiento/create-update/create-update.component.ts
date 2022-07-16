@@ -45,8 +45,8 @@ export class CreateUpdateMovimientoComponent implements OnInit {
    this.movForm = this.fb.group({
     'material': [null, Validators.compose([Validators.required])],
     'tipo': ['', Validators.compose([Validators.required])],
-    'cantidad': ['', Validators.compose([Validators.required])],
-    "responsable": "62c35100ecbce325e002fdce"
+    'valor': ['', Validators.compose([Validators.required])],
+    "responsable": JSON.parse(localStorage.getItem('user') || '')._id
    })
  }
 
@@ -66,12 +66,39 @@ export class CreateUpdateMovimientoComponent implements OnInit {
     )
   }
 
+  getValueMaterial(valorFormulario: any, montoMaterial: any, type: any): any {
+    if(type === 'entrada') {
+      return Number(montoMaterial) + Number(valorFormulario)
+    } else {
+      if((Number(montoMaterial) - Number(valorFormulario)) <= 0) {
+        return 0;
+      } else {
+        return Number(montoMaterial - valorFormulario)
+      }
+    }
+  }
+
   send(): any {
-    console.log(this.movForm.value)
-    this.movementService.createMovement(this.movForm.value).subscribe(
-      res => {
+
+    const {valor, tipo, material, responsable} = this.movForm.value
+
+    const product = this.listProducts.find((element: any) => element._id === material)
+    
+    let resultado = this.getValueMaterial(valor, product.cantidad, tipo);
+
+    const payload = {
+      tipo,
+      material,
+      responsable,
+      stock: resultado,
+      valor
+    }
+    console.log(payload)
+
+    this.movementService.createMovement(payload).subscribe(
+      (res: any) => {
         this.dialogRef.close(this.movForm.value)
-        this.openSnackBar('Se registro correctamente!');
+        this.openSnackBar(res.message || 'Se registro correctamente!');
       }, 
       err => {
         console.log(err);

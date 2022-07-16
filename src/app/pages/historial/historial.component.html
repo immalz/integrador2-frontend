@@ -1,6 +1,6 @@
 <div class="users">
     <div class="users__btns">
-        <button mat-raised-button>
+        <button mat-raised-button (click)="downloadPDF()">
             Descargar Registro
         </button>
     </div>
@@ -12,14 +12,9 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="actulizacion de usuario..." #input>
       </mat-form-field>
       
-      <div class="mat-elevation-z8">
+      <div class="mat-elevation-z8" id="htmlData">
         <table mat-table [dataSource]="dataSource" matSort>
       
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-            <td mat-cell *matCellDef="let row"> {{row._id}} </td>
-          </ng-container>
-
           <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
             <td mat-cell *matCellDef="let row"> {{row.createdAt | date: 'medium'}} </td>
@@ -39,11 +34,18 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Responsable </th>
             <td mat-cell *matCellDef="let row"> 
 
-              <ng-container *ngIf="row.responsable === []">
+              <!-- <ng-container *ngIf="row.responsable === []">
                 'Sin Responsable'
               </ng-container>
               <ng-container *ngIf="row.responsable !== []">
                 {{row.responsable[0].nombre}} 
+              </ng-container> -->
+
+              <ng-container *ngIf="row.responsable.length > 0">
+                {{row.responsable[0].nombre}}
+              </ng-container>
+              <ng-container *ngIf="row.responsable.length === 0">
+                <span style="color:red">*USUARIO ELIMINADO*</span>
               </ng-container>
 
               
@@ -64,4 +66,3 @@
       </div>
    </div>
 </div>
-<img src="assets/images/proveedores.png" alt="">

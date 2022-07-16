@@ -1,6 +1,7 @@
 <nav class="navbar" *ngIf="user">
    <p><b>Usuario: </b>{{user.nombre}}</p>
    <button (click)="loggout()" mat-icon-button >
+      Cerrar Sesión
       <mat-icon>launch</mat-icon>
     </button>
 </nav>

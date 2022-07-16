@@ -3,6 +3,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-image: radial-gradient(ellipse farthest-corner at 45px 30px , #fff 80%, rgba(0, 255, 0, 0) 0%, #bdbdbd 50%);
 }
 
 .providers__btns {
@@ -64,4 +65,8 @@ img {
 
 mat-icon {
     cursor: pointer;
+}
+
+@media screen and (min-width: 767px)  {
+    
 }

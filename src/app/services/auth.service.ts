@@ -12,6 +12,10 @@ export class AuthService {
     private readonly http: HttpClient
   ) { }
 
+  register(payload: any) {
+    return this.http.post(`${environment.url}/auth/signup`, payload);
+  }
+  
   login(payload: any) {
     return this.http.post(`${environment.url}/auth/signin`, payload);
   }

@@ -3,6 +3,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-image: radial-gradient(ellipse farthest-corner at 45px 30px , #fff 80%, rgba(0, 255, 0, 0) 0%, #bdbdbd 50%);
 }
 
 .users__btns {
@@ -22,6 +23,9 @@
     margin: 0 10px;
 }
 
+mat-icon {
+    cursor: pointer;
+}
 img {
     position: absolute;
  bottom: 30px;

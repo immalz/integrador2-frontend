@@ -14,4 +14,17 @@ export class UserService {
   getUsers() {
     return this.http.get(`${environment.url}/usuario`);
   }
+
+  getUser(id: string) {
+    return this.http.get(`${environment.url}/usuario/${id}`);
+  }
+
+  updateUser(id: number, payload: any) {
+    return this.http.put(`${environment.url}/usuario/${id}`, payload);
+  }
+
+  deleteUser(id: number, payload: any) {
+    return this.http.post(`${environment.url}/usuario/${id}`, payload);
+  }
+
 }

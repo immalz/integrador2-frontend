@@ -1,30 +1,32 @@
 <div class="create">
-    <form action="" class="form">
-        <h2>Registrar Usuario</h2>
+    <form [formGroup]="userForm" class="form">
+        <h2 *ngIf="data.mode !== 'update'">Registrar Usuario</h2>
+        <h2 *ngIf="data.mode === 'update'">Actualizar Usuario</h2>
         <mat-form-field appearance="fill">
             <mat-label>Nombre</mat-label>
-            <input matInput type="text" [(ngModel)]="payload.username" [ngModelOptions]="{standalone: true}">
+            <input matInput type="text" formControlName="nombre">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Correo</mat-label>
-            <input matInput type="email" [(ngModel)]="payload.email" [ngModelOptions]="{standalone: true}">
+            <input matInput type="email" placeholder="example@textilchavin.com"  formControlName="correo">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Elige un rol</mat-label>
-            <mat-select>
-              <mat-option value="option1">Usuario Operario</mat-option>
-              <mat-option value="option3">Usuario Administrador</mat-option>
+            <mat-select formControlName="roles">
+              <mat-option value="operador">Usuario Operario</mat-option>
+              <mat-option value="administrador">Usuario Administrador</mat-option>
             </mat-select>
           </mat-form-field>
       
         <mat-form-field appearance="fill">
             <mat-label>Contraseña</mat-label>
-            <input matInput type="password" [(ngModel)]="payload.password" [ngModelOptions]="{standalone: true}">
+            <input matInput type="password" formControlName="contraseña">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Repetir Contraseña</mat-label>
-            <input matInput type="password" [(ngModel)]="payload.password" [ngModelOptions]="{standalone: true}">
+            <input matInput type="password" formControlName="repetir_contraseña">
         </mat-form-field>
-        <button mat-flat-button color="primary" (click)="send()" >Guardar</button>
+        <button *ngIf="data.mode === 'create'" [disabled]="userForm.invalid" mat-flat-button color="primary" (click)="send()" >Guardar</button>
+        <button *ngIf="data.mode === 'update'" [disabled]="userForm.invalid" mat-flat-button color="primary" (click)="update()" >Actualizar</button>
     </form>
 </div>

@@ -7,7 +7,8 @@ import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export interface UserData {
   id: string;
@@ -27,9 +28,9 @@ export interface UserData {
 })
 export class InventaryComponent implements AfterViewInit  {
 
-  displayedColumns: string[] = ['id', 'razon_social', 'stock','owner', 'email', 'ruc', 'actions'];
+  displayedColumns: string[] = ['nombre','razon_social', 'stock','owner', 'email', 'ruc', 'actions'];
   dataSource: MatTableDataSource<UserData>;
-
+  rol: string = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -44,6 +45,7 @@ export class InventaryComponent implements AfterViewInit  {
    }
 
    ngAfterViewInit() {
+    this.rol = JSON.parse(localStorage.getItem('user')!).roles[0].nombre;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -57,11 +59,51 @@ export class InventaryComponent implements AfterViewInit  {
     )
   }
 
+  downloadPDF() {
+    const DATA: HTMLElement = document.getElementById('htmlData')!;
+    const doc = new jsPDF('p', 'pt', 'a4');
+    const options = {
+      background: 'white',
+      scale: 3
+    };
+    html2canvas(DATA, options).then((canvas) => {
+
+      const img = canvas.toDataURL('image/PNG');
+      const bufferX = 15;
+      const bufferY = 15;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+      docResult.save(`${new Date().toISOString()}-inventario.pdf`);
+    });
+  }
+
+
   create(): any {
-    const dialogRef = this.dialog.open(CreateUpdateComponent);
+    const dialogRef = this.dialog.open(CreateUpdateComponent,{
+      data: {
+        mode: 'create',
+        id: ''
+      }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Payload a enviar: ${result}`);
+      if(result) {
+        this.getInventory();
+        this.openSnackBar(`se creo el Producto: ${result.nombre}`)
+      }
+    });
+  }
+
+  update(id: number): any {
+    const dialogRef = this.dialog.open(CreateUpdateComponent, {
+      data: {
+        mode: 'view',
+        id
+      }
     });
   }
 
@@ -73,12 +115,12 @@ export class InventaryComponent implements AfterViewInit  {
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         const payload = {
-          responsable: '62c35100ecbce325e002fdce'
+          responsable: JSON.parse(localStorage.getItem('user')!)._id
         }
         this.inventaryService.deleteInventory(id, payload).subscribe(
-          res => {
+          (res: any) => {
             console.log(res);
-            this.openSnackBar('Se elimino el proveedor correctamente')
+            this.openSnackBar( res.message || 'Se elimino el material correctamente')
             this.getInventory();
           },
           err => {

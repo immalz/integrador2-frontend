@@ -20,7 +20,7 @@ import { GraphicsComponent } from './pages/graphics/graphics.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UsersComponent } from './pages/users/users.component';
+import { UsersComponent, DialogConfirm4 } from './pages/users/users.component';
 import { CreateUpdateProviderComponent } from './pages/providers/create-update/create-update.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateUpdateMovimientoComponent } from './pages/movimiento/create-update/create-update.component';
@@ -47,6 +47,7 @@ import { CreateUpdateMovimientoComponent } from './pages/movimiento/create-updat
     DialogConfirm,
     DialogConfirm2,
     DialogConfirm3,
+    DialogConfirm4,
     MovimientoComponent
   ],
   imports: [
